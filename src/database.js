@@ -11,10 +11,10 @@ const pool = new Pool({
   port: db.port,
 });
 
-pool.query("SELECT now()", (err, res) => {
+/*pool.query("SELECT now()", (err, res) => {
   console.log(err, res);
   pool.end;
-});
+});*/
 
 const client = new Client({
   user: db.user,
@@ -34,10 +34,10 @@ client.on("end", () => {
   console.log("Connection end");
 });
 
-client.query("SELECT * FROM users", (err, res) => {
+/*client.query("SELECT * FROM users", (err, res) => {
   console.log(err, res.rows);
   client.end();
-});
+});*/
 
 //Promisify pool querys
 //pool.query = promisify(pool.query)
