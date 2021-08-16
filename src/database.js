@@ -42,7 +42,4 @@ client.on("end", () => {
 //Promisify pool querys
 //pool.query = promisify(pool.query)
 
-module.exports = {
-  pool,
-  client,
-};
+module.exports = pool;
