@@ -47,9 +47,34 @@ router.get("/delete/:idlink", (req, res) => {
       if (error) {
         throw error;
       }
-      res.redirect('/links');
+      res.redirect("/links");
     }
   );
 });
+
+router.get("/edit/:idlink", (req, res) => {
+  const { idlink } = req.params;
+  pool.query(
+    "SELECT * FROM links WHERE idlink = $1",
+    [idlink],
+    (error, result) => {
+      if (error) throw error;
+      res.render("links/edit", { link: result.rows[0] });
+    }
+  );
+});
+
+router.post('/edit/:idlink', (req,res) =>{
+  const { idlink } = req.params;
+  const { title, url, description } = req.body;
+  pool.query(
+    "UPDATE links SET title = $1, url = $2, description = $3 WHERE idlink = $4",
+    [title, url, description, idlink],
+    (error, result) => {
+      if (error) throw error;
+      res.redirect("/links");
+    }
+  );
+})
 
 module.exports = router;
