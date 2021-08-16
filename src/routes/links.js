@@ -23,7 +23,7 @@ router.post("/add", (req, res) => {
       if (error) {
         throw error;
       }
-      res.redirect('/links')
+      res.redirect("/links");
       //res.status(201).send(`Link added with ID: ${result.oid}`);
     }
   );
@@ -37,4 +37,19 @@ router.get("/", (req, res) => {
     res.render("links/list", { links: result.rows });
   });
 });
+
+router.get("/delete/:idlink", (req, res) => {
+  const { idlink } = req.params;
+  pool.query(
+    "DELETE FROM links WHERE idlink = $1",
+    [idlink],
+    (error, result) => {
+      if (error) {
+        throw error;
+      }
+      res.redirect('/links');
+    }
+  );
+});
+
 module.exports = router;
