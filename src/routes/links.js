@@ -23,17 +23,18 @@ router.post("/add", (req, res) => {
       if (error) {
         throw error;
       }
-      res.status(201).send(`Link added with ID: ${result.oid}`);
+      res.redirect('/links')
+      //res.status(201).send(`Link added with ID: ${result.oid}`);
     }
   );
 });
 
-router.get('/add', (req, res) => {
-    //res.send('Holaa links')
-    res.render('links/add');
-})
-
-router.post('/add', (req, res) => {
-    res.send('received');
-})
+router.get("/", (req, res) => {
+  pool.query("SELECT * FROM links", (error, result) => {
+    if (error) {
+      throw error;
+    }
+    res.render("links/list", { links: result.rows });
+  });
+});
 module.exports = router;
